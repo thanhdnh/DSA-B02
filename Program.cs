@@ -2,40 +2,44 @@
 
 public class Program
 {
-    static Array createFibArray(int n){
-        Array ar =  Array.CreateInstance(
+    static Array createFibArray(int n)
+    {
+        Array ar = Array.CreateInstance(
                         typeof(int),
-                        new int[1]{n},
-                        new int[1]{1}
+                        new int[1] { n },
+                        new int[1] { 1 }
                     );
         ar.SetValue(1, 1);
         ar.SetValue(1, 2);
-        for(int i=3; i<=ar.GetUpperBound(0); i++)
+        for (int i = 3; i <= ar.GetUpperBound(0); i++)
             ar.SetValue(
-                (int)ar.GetValue(i-2)+(int)ar.GetValue(i-1),
-                 i
+                (int)ar.GetValue(i - 2) + (int)ar.GetValue(i - 1), i
             );
         return ar;
     }
-    static void splitIndices(int r, int n, int m, int nfrom, int mfrom, out int i, out int j){
-        i = (r-mfrom)/m+nfrom;
-        j=(r%m==0)?(m):(r%m);
+    static void splitIndices(int r, int n, int m, int nfrom, int mfrom, out int i, out int j)
+    {
+        i = (r - mfrom) / m + nfrom;
+        j = (r % m == 0) ? (m) : (r % m);
     }
-    static Array create2DFibArray(int n, int m){
+    static Array create2DFibArray(int n, int m)
+    {
         Array ar = Array.CreateInstance(
                         typeof(int),
-                        new int[2]{n, m},
-                        new int[2]{1, 1}
+                        new int[2] { n, m },
+                        new int[2] { 1, 1 }
                     );
         ar.SetValue(1, 1, 1); ar.SetValue(1, 1, 2);
-        for(int i=ar.GetLowerBound(0);i<=ar.GetUpperBound(0);i++)
-            for(int j=ar.GetLowerBound(1);j<=ar.GetUpperBound(1);j++){
-                int x = j + (i-1)*ar.GetLength(1);
-                if(x>2){
+        for (int i = ar.GetLowerBound(0); i <= ar.GetUpperBound(0); i++)
+            for (int j = ar.GetLowerBound(1); j <= ar.GetUpperBound(1); j++)
+            {
+                int x = j + (i - 1) * ar.GetLength(1);
+                if (x > 2)
+                {
                     int ii, jj, iii, jjj;
-                    splitIndices(x-1, ar.GetLength(0), ar.GetLength(1), ar.GetLowerBound(0), ar.GetLowerBound(1), out ii, out jj);
-                    splitIndices(x-2, ar.GetLength(0), ar.GetLength(1), ar.GetLowerBound(0), ar.GetLowerBound(1), out iii, out jjj);
-                    ar.SetValue((int)ar.GetValue(ii, jj)+(int)ar.GetValue(iii, jjj), i, j);
+                    splitIndices(x - 1, ar.GetLength(0), ar.GetLength(1), ar.GetLowerBound(0), ar.GetLowerBound(1), out ii, out jj);
+                    splitIndices(x - 2, ar.GetLength(0), ar.GetLength(1), ar.GetLowerBound(0), ar.GetLowerBound(1), out iii, out jjj);
+                    ar.SetValue((int)ar.GetValue(ii, jj) + (int)ar.GetValue(iii, jjj), i, j);
                 }
             }
         return ar;
@@ -55,15 +59,16 @@ public class Program
         Console.WriteLine((int)arlist[list.Count-1]);*/
 
         Array fib2ds = create2DFibArray(4, 3);
-        for(int i=fib2ds.GetLowerBound(0);i<=fib2ds.GetUpperBound(0);i++){
-            for(int j=fib2ds.GetLowerBound(1);j<=fib2ds.GetUpperBound(1);j++)
-                Console.Write(fib2ds.GetValue(i, j)+"\t");
+        for (int i = fib2ds.GetLowerBound(0); i <= fib2ds.GetUpperBound(0); i++)
+        {
+            for (int j = fib2ds.GetLowerBound(1); j <= fib2ds.GetUpperBound(1); j++)
+                Console.Write(fib2ds.GetValue(i, j) + "\t");
             Console.WriteLine();
         }
         System.Console.WriteLine("=====");
         Array fibs = createFibArray(12);
-        foreach(int v in fibs)
-            Console.Write(v+", ");
+        foreach (int v in fibs)
+            Console.Write(v + ", ");
 
         /*Array ar1 = Array.CreateInstance(
                             typeof(int), 
