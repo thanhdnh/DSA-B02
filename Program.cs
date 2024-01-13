@@ -1,4 +1,6 @@
-﻿public class Program
+﻿using System.Collections;
+
+public class Program
 {
     static Array createFibArray(int n){
         Array ar =  Array.CreateInstance(
@@ -31,8 +33,8 @@
                 //cặp chỉ số tương ứng với x-2
                 int iii = 0, jjj = 0;//công thức 2 và 3
 
-                ar.SetValue(ar.GetValue(ii, jj)+ar.GetValue(iii, jjj), 
-                            i, j);
+                /*ar.SetValue(ar.GetValue(ii, jj)+ar.GetValue(iii, jjj), 
+                            i, j);*/
             }
         return ar;
     }
@@ -40,9 +42,19 @@
     {
         Console.Clear();
 
-        Array fibs = createFibArray(10);
+        List<int> list = new List<int>();
+        list.Add(1); list.Add(2);
+        Console.WriteLine(list[0]);
+        Console.WriteLine(list[list.Count-1]);
+
+        ArrayList arlist = new ArrayList();
+        arlist.Add(1); arlist.Add(2);
+        Console.WriteLine((int)arlist[0]);
+        Console.WriteLine((int)arlist[list.Count-1]);
+
+        /*Array fibs = createFibArray(10);
         foreach(int v in fibs)
-            Console.Write(v+", ");
+            Console.Write(v+", ");*/
 
         /*Array ar1 = Array.CreateInstance(
                             typeof(int), 
