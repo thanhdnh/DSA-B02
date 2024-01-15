@@ -2,102 +2,87 @@
 
 public class Program
 {
-    static Array createFibArray(int n)
-    {
+    static Array create1DFibArray(int n){
         Array ar = Array.CreateInstance(
-                        typeof(int),
-                        new int[1] { n },
-                        new int[1] { 1 }
-                    );
-        ar.SetValue(1, 1);
-        ar.SetValue(1, 2);
-        for (int i = 3; i <= ar.GetUpperBound(0); i++)
+                typeof(int), new int[1]{n}, new int[1]{1}
+        );
+        ar.SetValue(0, 1); ar.SetValue(1, 2);
+        for(int i=3; i<=ar.GetUpperBound(0); i++)
             ar.SetValue(
-                (int)ar.GetValue(i - 2) + (int)ar.GetValue(i - 1), i
+              (int)ar.GetValue(i-1)+(int)ar.GetValue(i-2), i
             );
         return ar;
     }
-    static void splitIndices(int r, int n, int m, int nfrom, int mfrom, out int i, out int j)
-    {
-        i = (r - mfrom) / m + nfrom;
-        j = (r % m == 0) ? (m) : (r % m);
+    static void print1DArray(Array ar){
+        foreach(int v in ar)
+            Console.Write(v+"  ");
+        Console.WriteLine();
     }
-    static Array create2DFibArray(int n, int m)
-    {
+    static void convert1DTo2D(int x, int m, int n, 
+                out int alpha, out int beta){
+        alpha = (x+n-1)/n;
+        beta  = (x%n==0)?(n):(x%n);
+    }
+    static Array create2DFibArray(int m, int n){
         Array ar = Array.CreateInstance(
-                        typeof(int),
-                        new int[2] { n, m },
-                        new int[2] { 1, 1 }
-                    );
-        ar.SetValue(1, 1, 1); ar.SetValue(1, 1, 2);
-        for (int i = ar.GetLowerBound(0); i <= ar.GetUpperBound(0); i++)
-            for (int j = ar.GetLowerBound(1); j <= ar.GetUpperBound(1); j++)
-            {
-                int x = j + (i - 1) * ar.GetLength(1);
-                if (x > 2)
-                {
+            typeof(int),
+            new int[2]{m, n}, new int[2]{1, 1}
+        );
+        for(int i=1; i<=ar.GetUpperBound(0);i++)
+            for(int j=1; j<=ar.GetUpperBound(1);j++){
+                int x = (i-1)*n+j;
+                if(x==1)
+                    ar.SetValue(0, i, j);
+                if(x==2)
+                    ar.SetValue(1, i, j);
+                if(x>2){
                     int ii, jj, iii, jjj;
-                    splitIndices(x - 1, ar.GetLength(0), ar.GetLength(1), ar.GetLowerBound(0), ar.GetLowerBound(1), out ii, out jj);
-                    splitIndices(x - 2, ar.GetLength(0), ar.GetLength(1), ar.GetLowerBound(0), ar.GetLowerBound(1), out iii, out jjj);
-                    ar.SetValue((int)ar.GetValue(ii, jj) + (int)ar.GetValue(iii, jjj), i, j);
+                    convert1DTo2D(x-1, m, n, out ii, out jj);
+                    convert1DTo2D(x-2, m, n, out iii, out jjj);
+                    ar.SetValue(
+                        (int)ar.GetValue(ii, jj)+
+                        (int)ar.GetValue(iii, jjj), i, j
+                    );
                 }
             }
         return ar;
     }
+    static void print2DArray(Array ar){
+        for(int i=ar.GetLowerBound(0); i<=ar.GetUpperBound(0); i++){
+            for(int j=ar.GetLowerBound(1); j<=ar.GetUpperBound(1);j++)
+                Console.Write(ar.GetValue(i, j)+"\t");
+            Console.WriteLine();
+        }
+    }
+
     public static void Main(string[] args)
     {
         Console.Clear();
 
-        /*List<int> list = new List<int>();
-        list.Add(1); list.Add(2);
-        Console.WriteLine(list[0]);
-        Console.WriteLine(list[list.Count-1]);*/
+        /*Array ar1dfib = create1DFibArray(10);
+        print1DArray(ar1dfib);*/
 
-        /*ArrayList arlist = new ArrayList();
-        arlist.Add(1); arlist.Add(2);
-        Console.WriteLine((int)arlist[0]);
-        Console.WriteLine((int)arlist[list.Count-1]);*/
-
-        Array fib2ds = create2DFibArray(4, 3);
-        for (int i = fib2ds.GetLowerBound(0); i <= fib2ds.GetUpperBound(0); i++)
-        {
-            for (int j = fib2ds.GetLowerBound(1); j <= fib2ds.GetUpperBound(1); j++)
-                Console.Write(fib2ds.GetValue(i, j) + "\t");
-            Console.WriteLine();
-        }
-        System.Console.WriteLine("=====");
-        Array fibs = createFibArray(12);
-        foreach (int v in fibs)
-            Console.Write(v + ", ");
+        Array ar2dfib = create2DFibArray(3, 4);
+        print2DArray(ar2dfib);
 
         /*Array ar1 = Array.CreateInstance(
-                            typeof(int), 
-                            new int[1]{5}, 
-                            new int[1]{2}
-                        );*/
-        /*for(int i=ar1.GetLowerBound(0);
-                i<=ar1.GetUpperBound(0);i++)*/
+                        typeof(int),
+                        new int[1]{5},
+                        new int[1]{1}
+                    );*/
+        //ar1[1], ar1[2], ..., ar1[5]
+        //Random r = new Random();
+        /*for(int i=ar1.GetLowerBound(0); i<=ar1.GetUpperBound(0); i++)
+            ar1.SetValue(r.Next(1, 9), i);*/
         /*for(int i=ar1.GetLowerBound(0); 
-                i<ar1.GetLength(0)+ar1.GetLowerBound(0); i++)
-            ar1.SetValue(i*i, i); //giá trị, chỉ số
+                i<ar1.GetLowerBound(0)+ar1.Length; i++)
+            ar1.SetValue(r.Next(1, 9), i);//ar1[i] = ?
         for(int i=ar1.GetLowerBound(0); 
-                i<ar1.GetLength(0)+ar1.GetLowerBound(0); i++)
-            Console.WriteLine($"ar1[{i}]={ar1.GetValue(i)}");
-        */
-        /*Array ar2 = Array.CreateInstance(
-                                typeof(int),
-                                new int[2]{3, 2},
-                                new int[2]{1, 1}
-                            );
-        Random r = new Random();
-        for(int i=ar2.GetLowerBound(0); i<=ar2.GetUpperBound(0);i++)
-            for(int j=ar2.GetLowerBound(1); j<=ar2.GetUpperBound(1);j++)
-                ar2.SetValue(r.Next(1, 9), i, j);
-        for(int i=ar2.GetLowerBound(0); i<=ar2.GetUpperBound(0);i++){
-            for(int j=ar2.GetLowerBound(1); j<=ar2.GetUpperBound(1);j++)
-                System.Console.Write(ar2.GetValue(i, j)+"\t");
-            Console.WriteLine("");
-        }*/
+                i<=ar1.GetUpperBound(0); i++)
+            Console.Write(ar1.GetValue(i)+"  ");
+        System.Console.WriteLine();*/
+        /*foreach(int v in ar1)
+            Console.Write(v+"  ");*/
 
         Console.ReadLine();
     }
