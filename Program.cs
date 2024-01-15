@@ -59,11 +59,27 @@ public class Program
     {
         Console.Clear();
 
+        List<int> list = new List<int>();
+        list.Add(0); list.Add(1);
+        for(int i=0; i<=10; i++){
+            if(i>=2)
+                list.Add(list[i-1]+list[i-2]);
+        }
+        foreach(int v in list) Console.Write(v+"  ");
+        Console.WriteLine();
+        ArrayList arlist = new ArrayList();
+        arlist.Add(0); arlist.Add(1);
+        for(int i=0; i<=10; i++){
+            if(i>=2)
+                arlist.Add((int)arlist[i-1]+(int)arlist[i-2]);
+        }
+        foreach(int v in arlist) Console.Write(v+"  ");
+
         /*Array ar1dfib = create1DFibArray(10);
         print1DArray(ar1dfib);*/
 
-        Array ar2dfib = create2DFibArray(3, 4);
-        print2DArray(ar2dfib);
+        /*Array ar2dfib = create2DFibArray(5, 3);
+        print2DArray(ar2dfib);*/
 
         /*Array ar1 = Array.CreateInstance(
                         typeof(int),
